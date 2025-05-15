@@ -34,13 +34,20 @@ def canny_edge_demo():
 
         # グレースケール化(これで白黒にしてる)
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
+        
+        #ノイズ除去　ガウシアン
+        blurred = cv2.GaussianBlur(gray, (5, 5), 1.4)
+        
         # Cannyエッジ検出(輪郭を検出)
         edges = cv2.Canny(gray, th1, th2)
+
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+        gradient = cv2.morphologyEx(edges, cv2.MORPH_GRADIENT, kernel, iterations=1)
 
         # 表示
         cv2.imshow("Original", frame)
         cv2.imshow("Canny Edge", edges)
+        cv2.imshow("Morph Gradient", gradient)
 
         # ESCキーで終了
         k = cv2.waitKey(10)
