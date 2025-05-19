@@ -29,7 +29,7 @@ def mask_ball():
         ret, img = cap.read()  # フレームを取得
         if not ret:
             break
-
+       #HSV 色彩　彩度　明度
         # トラックバーからHSVの各しきい値を取得
         h_l = cv2.getTrackbarPos("H_l", "HSV")
         h_h = cv2.getTrackbarPos("H_h", "HSV")
