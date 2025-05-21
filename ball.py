@@ -54,12 +54,8 @@ def ball():
         # 元画像とマスクを合成（該当色だけ残す）
         result = cv2.bitwise_and(img, img, mask=mask)
 
-         # トラックバーからしきい値を取得(thはトラックバー)
-        th1 = cv2.getTrackbarPos("Threshold1", "HSV")
-        th2 = cv2.getTrackbarPos("Threshold2", "HSV")
-
         # グレースケール化(これで白黒にしてる)
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        gray = cv2.cvtColor(result, cv2.COLOR_BGR2GRAY)
 
         #明るさ補正
         clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
@@ -67,6 +63,12 @@ def ball():
 
         #ノイズ除去　ガウシアン
         blurred = cv2.GaussianBlur(gray, (5, 5), 1.4)
+
+
+         # トラックバーからしきい値を取得(thはトラックバー)
+        th1 = cv2.getTrackbarPos("Threshold1", "HSV")
+        th2 = cv2.getTrackbarPos("Threshold2", "HSV")
+
 
         # Cannyエッジ検出(輪郭を検出)
         edges = cv2.Canny(blurred, th1, th2)
@@ -78,7 +80,7 @@ def ball():
         # 結果を表示
         cv2.imshow('Original', img)    # 元画像
         cv2.imshow('Mask', result)     # 色抽出結果
-        cv2.imshow("Morph Gradient", gradient)
+        cv2.imshow("Edge on Mask", gradient)
 
         # Escキー（ASCIIコード27）を押すと終了
         k = cv2.waitKey(10)
