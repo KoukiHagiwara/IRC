@@ -44,6 +44,9 @@ def mask_ball():
         # マスクの範囲を指定
         lower = np.array([h_l, s_l, v_l])
         upper = np.array([h_h, s_h, v_h])
+       # lower = np.array([23, 80, 53])
+       # upper = np.array([180, 255, 238])
+
 
         # 指定範囲の色を抽出（白：該当、黒：非該当）
         mask = cv2.inRange(hsv, lower, upper)

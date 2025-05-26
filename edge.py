@@ -47,7 +47,7 @@ def canny_edge_demo():
 
         #モルフォロジー
         kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
-        gradient = cv2.morphologyEx(edges, cv2.MORPH_GRADIENT, kernel, iterations=1)
+        gradient = cv2.morphologyEx(edges, cv2.MORPH_GRADIENT, kernel, iterations=2)
 
         # 表示
         cv2.imshow("Original", frame)
