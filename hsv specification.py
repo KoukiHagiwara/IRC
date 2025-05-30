@@ -43,16 +43,35 @@ def ball():
         
         # BGRからHSVに変換
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+        
+        # 赤色の低い方の範囲（0〜10）
+        lower_red1 = np.array([0, 58, 30])
+        upper_red1 = np.array([10, 255, 255])
 
-        # マスクの範囲を指定
-       # lower = np.array([h_l, s_l, v_l])
-       # upper = np.array([h_h, s_h, v_h])
-        lower = np.array([0, 58, 30])
-        upper = np.array([122, 255, 255])
+        # 赤色の高い方の範囲（170〜180）
+        lower_red2 = np.array([170, 58, 30])
+        upper_red2 = np.array([180, 255, 255])
+
+        # 2つのマスクを作成して合成
+        mask1 = cv2.inRange(hsv, lower_red1, upper_red1)
+        mask2 = cv2.inRange(hsv, lower_red2, upper_red2)
+        mask_red = cv2.bitwise_or(mask1, mask2)
+
+        # 青
+        lower_blue = np.array([96, 100, 0])
+        upper_blue = np.array([159, 250, 255])
+        mask_blue = cv2.inRange(hsv, lower_blue, upper_blue)
+
+        #黄
+        lower_yellow = np.array([22, 105, 81])
+        upper_yellow = np.array([69, 255, 255])
+        mask_yellow = cv2.inRange(hsv, lower_yellow, upper_yellow)
+
+        # 全色を統合
+        mask = cv2.bitwise_or(mask_red, mask_blue)
+        mask = cv2.bitwise_or(mask, mask_yellow)
 
 
-        # 指定範囲の色を抽出（白：該当、黒：非該当）
-        mask = cv2.inRange(hsv, lower, upper)
 
         # 元画像とマスクを合成（該当色だけ残す）
         result = cv2.bitwise_and(img, img, mask=mask)
