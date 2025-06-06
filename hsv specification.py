@@ -43,12 +43,9 @@ def ball():
         upper_yellow = np.array([69, 255, 255])
         mask_yellow = cv2.inRange(hsv, lower_yellow, upper_yellow)
         
-
         # 全色を統合
         mask = cv2.bitwise_or(mask_red, mask_blue)
         mask = cv2.bitwise_or(mask, mask_yellow)
-
-
 
         # 元画像とマスクを合成（該当色だけ残す）
         result = cv2.bitwise_and(img, img, mask=mask)
@@ -93,7 +90,6 @@ def ball():
                 cv2.circle(result, (i[0], i[1]), i[2], (0, 255, 0), 2)
                 # 中心点
                 cv2.circle(result, (i[0], i[1]), 2, (0, 0, 255), 3)
-
 
         # 結果を表示
         cv2.imshow('Original', img)    # 元画像
